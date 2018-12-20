@@ -1,0 +1,89 @@
+ README about the sanity checks
+<==============================>
+
+Checkpatch:
+===========
+The following scripts derived from kernel sources, with some
+customizations are used to verify the code style issues and
+spell checks (limited) etc.
+
+<Kernel-sorce-tree>/scripts/checkpatch.pl
+    - verifies the code style.
+
+ To run on specific files:
+   # cd <Kernel-sorce-tree> 
+   # ./scripts/checkpatch.pl -f <file1> <file2> ... <fileN>
+
+ To run on git diff:
+   # ./scripts/checkpatch.pl <diff>
+ 
+
+
+Sparse Tool:
+============
+Install Sparse tools.
+Go to the desired directory.
+Run the make command with CC is cgcc
+
+ex:
+   # cd <source-driver>
+   # make CC=cgcc
+
+
+Cppcheck:
+==========
+Install cppcheck.
+Run on the desired directory.
+
+ex:
+  # cppcheck <source-driver>
+
+
+Clang:
+=======
+Install cppcheck.
+Run on the desired directory.
+Run the make command with CC is clang
+
+ex:
+  # cd <source-driver>
+  # make CC=clang
+
+Coccinelle
+==========
+Coccinelle is a tool for pattern matching and text transformation 
+that has many uses in kernel development, including the application 
+of complex, tree-wide patches and detection of problematic programming patterns.
+
+Getting Coccinelle
+------------------
+The semantic patches included in the kernel use features and options 
+which are provided by Coccinelle version 1.0.0-rc11 and above. 
+Using earlier versions will fail as the option names used by the 
+Coccinelle files and coccicheck have been updated.
+
+Using Coccinelle on the Linux kernel
+------------------------------------
+
+A Coccinelle-specific target is defined in the top level Makefile. 
+This target is named coccicheck and calls the coccicheck front-end in the scripts directory.
+
+=>Four basic modes are defined: patch, report, context, and org. 
+  The mode to use is specified by setting the MODE variable with MODE=<mode>.
+
+    1. patch proposes a fix, when possible.
+    2. report generates a list in the following format: file:line:column-column: message
+    3. context highlights lines of interest and their context in a diff-like style.Lines of interest are indicated with -.
+    4. org generates a report in the Org mode format of Emacs.
+
+-> Note that not all semantic patches implement all modes. For easy use of Coccinelle, the default mode is “report”.
+
+Two other modes provide some common combinations of these modes.
+
+    - chain tries the previous modes in the order above until one succeeds.
+    - rep+ctxt runs successively the report mode and the context mode. 
+      It should be used with the C option (described later) which checks the code on a file basis.
+Linux kernel coding style
+=========================
+https://www.kernel.org/doc/html/v4.12/process/coding-style.html
+https://www.kernel.org/doc/html/v4.12/index.html
